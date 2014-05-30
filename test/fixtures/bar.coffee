@@ -1,0 +1,2 @@
+bar = ->
+  console.log("bar")
