@@ -4,4 +4,11 @@ defmodule Homunculus.FileUtils do
     IO.puts "Concating sources into #{target}"
     File.write!(target, content)
   end
+
+  def last_modified(path) do
+    case File.stat(path) do
+      {:ok, %File.Stat{mtime: mtime}} -> mtime
+      {:error, _} -> {{1970, 1, 1}, {0, 0, 0}}
+    end
+  end
 end

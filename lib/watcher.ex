@@ -28,7 +28,7 @@ defmodule Homunculus.Watcher do
   end
 
   def initial_state(files) do
-    Enum.map(files, fn(file) -> HashDict.put(HashDict.new, file, Mix.Utils.last_modified(file)) end)
+    Enum.map(files, fn(file) -> HashDict.put(HashDict.new, file, Homunculus.FileUtils.last_modified(file)) end)
     |> Enum.reduce(fn(previous, final) -> HashDict.merge(previous, final) end)
   end
 
@@ -37,12 +37,12 @@ defmodule Homunculus.Watcher do
   end
 
   def add_or_update_file(file) do
-    value = Mix.Utils.last_modified(file)
+    value = Homunculus.FileUtils.last_modified(file)
     Agent.update(Files, fn(dict) -> HashDict.put(dict, file, value) end)
   end
 
   def file_changed?(file) do
-    new_value = Mix.Utils.last_modified(file)
+    new_value = Homunculus.FileUtils.last_modified(file)
     previous_value = Agent.get(Files,  fn(dict) -> HashDict.get(dict, file)  end)
     changed? = new_value != previous_value
     if changed? do
