@@ -4,6 +4,7 @@ defmodule Homunculus.Watcher do
 
   def start(glob) do
     Path.wildcard(glob)  |> start_file_agent
+    IO.puts "Watchings for files that match #{glob}..."
     watch(glob)
   end
 
