@@ -7,7 +7,8 @@ defmodule Homunculus.CLI do
   end
 
   def parse_args(args) do
-      parse = OptionParser.parse(args)
+      parse = OptionParser.parse(args, switches: [ help: :boolean],
+                                                          aliases:    [ h:      :help     ])
       case parse do
         { [ help: true], _,   _} -> :help
         { _, [glob],            _} -> { glob }
@@ -24,7 +25,7 @@ defmodule Homunculus.CLI do
   end
 
   def process(glob) do
-		glob |> tuple_to_list |> Enum.join
-		|> Homunculus.Watcher.start
+    glob |> tuple_to_list |> Enum.join
+    |> Homunculus.Watcher.start
   end
 end

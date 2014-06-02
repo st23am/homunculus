@@ -27,13 +27,13 @@ defmodule Homunculus.Watcher do
      Enum.any?(files, fn(file) -> file_changed?(file) end)
   end
 
-  def initial_state(files) do
+  def set_initial_state(files) do
     Enum.map(files, fn(file) -> HashDict.put(HashDict.new, file, Homunculus.FileUtils.last_modified(file)) end)
     |> Enum.reduce(fn(previous, final) -> HashDict.merge(previous, final) end)
   end
 
   def start_file_agent(files)  do
-    Agent.start_link(fn -> initial_state(files) end, name: Files)
+    Agent.start_link(fn -> set_initial_state(files) end, name: Files)
   end
 
   def add_or_update_file(file) do
