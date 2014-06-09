@@ -18,7 +18,7 @@ defmodule Homunculus.Watcher do
 
   def perform_task(files, target) do
     Enum.map(files, fn(file) ->
-                           Task.async(fn -> Homunculus.CoffeeUtils.compile(file) end) end)
+                           Task.async(Homunculus.CoffeeUtils, :compile, [file]) end)
     |> Enum.map(fn(task) -> Task.await(task) end)
     |> Homunculus.FileUtils.concat_content(target)
   end
