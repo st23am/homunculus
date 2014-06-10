@@ -28,4 +28,12 @@ defmodule Homunculus.CLI do
     glob |> tuple_to_list |> Enum.join
     |> Homunculus.Watcher.start
   end
+
+  def puts_success(msg) do
+    IO.puts IO.ANSI.reset <>IO.ANSI.green <> msg <> IO.ANSI.reset
+  end
+
+  def puts_error(msg) do
+      IO.puts IO.ANSI.reset <> IO.ANSI.red <> msg <> IO.ANSI.reset
+  end
 end
