@@ -29,7 +29,7 @@ defmodule Homunculus.CLI do
     |> Homunculus.Watcher.start
   end
 
-  def puts_success(msg) do
+  def puts_notice(msg) do
     IO.puts IO.ANSI.reset <>IO.ANSI.green <> msg <> IO.ANSI.reset
   end
 

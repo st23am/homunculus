@@ -3,7 +3,7 @@ defmodule Homunculus.Watcher do
   import Homunculus.FileUtils
 
   def start(glob) do
-    Path.wildcard(glob)  |> start_file_agent
+    glob |> Path.wildcard  |> start_file_agent
     IO.puts "Watchings for files that match #{glob}..."
     watch(glob)
   end
@@ -21,6 +21,7 @@ defmodule Homunculus.Watcher do
                            Task.async(Homunculus.CoffeeUtils, :compile, [file]) end)
     |> Enum.map(fn(task) -> Task.await(task) end)
     |> Homunculus.FileUtils.concat_content(target)
+
   end
 
   def check_for_changes(files) do
@@ -28,7 +29,8 @@ defmodule Homunculus.Watcher do
   end
 
   def set_initial_state(files) do
-    Enum.map(files, fn(file) -> HashDict.put(HashDict.new, file, Homunculus.FileUtils.last_modified(file)) end)
+    Enum.map(files, fn(file) ->
+                        HashDict.put(HashDict.new, file, Homunculus.FileUtils.last_modified(file)) end)
     |> Enum.reduce(fn(previous, final) -> HashDict.merge(previous, final) end)
   end
 
