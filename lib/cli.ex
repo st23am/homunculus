@@ -25,7 +25,7 @@ defmodule Homunculus.CLI do
   end
 
   def process(glob) do
-    glob |> tuple_to_list |> Enum.join
+    glob |>Tuple.to_list |> Enum.join
     |> Homunculus.Watcher.start
   end
 

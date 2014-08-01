@@ -7,11 +7,4 @@ defmodule Homunculus.FileUtils do
       _    -> Homunculus.CLI.puts_error("Something went wrong writing the file!")
     end
   end
-
-  def last_modified(path) do
-    case File.stat(path) do
-      {:ok, %File.Stat{mtime: mtime}} -> mtime
-      {:error, _} -> {{1970, 1, 1}, {0, 0, 0}}
-    end
-  end
 end
