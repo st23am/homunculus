@@ -4,7 +4,7 @@ defmodule Homunculus.Mixfile do
   def project do
     [app: :homunculus,
      version: "0.0.2",
-     elixir: "~> 0.14.3",
+     elixir: "~> 0.15.0",
      escript: [ main_module: Homunculus.CLI, embed_elixir: true ],
      deps: deps]
   end
